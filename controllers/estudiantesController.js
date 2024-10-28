@@ -1,13 +1,8 @@
 // controllers/estudianteController.js
-const db = require('../db');
+import db from '../db.js';
 
-//SI EL USUARIO ELIGE SER ESTUDIANTE ESCUPIR ESTE FORMULARIO AL FRONT//
-
-
-
-// Función para CREAR un nuevo estudiante//
-
-exports.createEstudiante = (req, res) => {
+// Función para CREAR un nuevo estudiante
+export const createEstudiante = (req, res) => {
     const { nombre, email, password } = req.body;
     const sql = 'INSERT INTO estudiantes (nombre, email, password) VALUES (?, ?, ?)';
     db.query(sql, [nombre, email, password], (err, result) => {
@@ -20,9 +15,8 @@ exports.createEstudiante = (req, res) => {
     });
 };
 
-
 // Función para eliminar un estudiante por ID
-exports.deleteEstudiante = (req, res) => {
+export const deleteEstudiante = (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM estudiantes WHERE estudiante_id = ?';
     db.query(sql, [id], (err, result) => {
@@ -35,9 +29,8 @@ exports.deleteEstudiante = (req, res) => {
     });
 };
 
-
 // Función para obtener todos los estudiantes
-exports.getEstudiantes = (req, res) => {
+export const getEstudiantes = (req, res) => {
     const sql = 'SELECT * FROM estudiantes';
     db.query(sql, (err, results) => {
         if (err) {
@@ -50,7 +43,7 @@ exports.getEstudiantes = (req, res) => {
 };
 
 // Función para obtener un estudiante específico por ID
-exports.getEstudianteById = (req, res) => {
+export const getEstudianteById = (req, res) => {
     const { id } = req.params;
     const sql = 'SELECT * FROM estudiantes WHERE estudiante_id = ?';
     db.query(sql, [id], (err, result) => {
@@ -65,9 +58,8 @@ exports.getEstudianteById = (req, res) => {
     });
 };
 
-
 // Función para actualizar un estudiante por ID
-exports.updateEstudiante = (req, res) => {
+export const updateEstudiante = (req, res) => {
     const { id } = req.params;
     const { nombre, email, password } = req.body;
     const sql = 'UPDATE estudiantes SET nombre = ?, email = ?, password = ? WHERE estudiante_id = ?';

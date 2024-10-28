@@ -1,8 +1,8 @@
 // controllers/eventoController.js
-const db = require('../db');
+import db from '../db.js';
 
 // Función para obtener todos los eventos
-exports.getEventos = (req, res) => {
+export const getEventos = (req, res) => {
     const sql = 'SELECT * FROM eventos';
     db.query(sql, (err, results) => {
         if (err) {
@@ -14,9 +14,8 @@ exports.getEventos = (req, res) => {
     });
 };
 
-// Función para crear un nuevo evento//
-
-exports.createEvento = (req, res) => {
+// Función para crear un nuevo evento
+export const createEvento = (req, res) => {
     const { titulo, descripcion, evento_date, localidad, organizador_id, organizador_type } = req.body;
     const sql = 'INSERT INTO eventos (titulo, descripcion, evento_date, localidad, organizador_id, organizador_type) VALUES (?, ?, ?, ?, ?, ?)';
     db.query(sql, [titulo, descripcion, evento_date, localidad, organizador_id, organizador_type], (err, result) => {
@@ -30,7 +29,7 @@ exports.createEvento = (req, res) => {
 };
 
 // Función para eliminar un evento por ID
-exports.deleteEvento = (req, res) => {
+export const deleteEvento = (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM eventos WHERE evento_id = ?';
     db.query(sql, [id], (err, result) => {
@@ -43,9 +42,8 @@ exports.deleteEvento = (req, res) => {
     });
 };
 
-
 // Función para actualizar un evento por ID
-exports.updateEvento = (req, res) => {
+export const updateEvento = (req, res) => {
     const { id } = req.params;
     const { titulo, descripcion, evento_date, localidad, organizador_id, organizador_type } = req.body;
     const sql = 'UPDATE eventos SET titulo = ?, descripcion = ?, evento_date = ?, localidad = ?, organizador_id = ?, organizador_type = ? WHERE evento_id = ?';

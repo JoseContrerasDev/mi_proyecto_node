@@ -1,10 +1,8 @@
 // controllers/empresaController.js
-const db = require('../db');
+import db from '../db.js';
 
-
-//SI EL USUARIO ELIGE SER EMPRESA ESCUPIR ESTE FORMULARIO AL FRONT//
-
-exports.createEmpresa = (req, res) => {
+// Función para crear una nueva empresa
+export const createEmpresa = (req, res) => {
     const { nombre, direccion, telefono, contacto_principal, email, password, descripcion, industria, webpage } = req.body;
     
     const sql = `
@@ -23,7 +21,7 @@ exports.createEmpresa = (req, res) => {
 };
 
 // Función para eliminar una empresa por ID
-exports.deleteEmpresa = (req, res) => {
+export const deleteEmpresa = (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM empresas WHERE empresa_id = ?';
     db.query(sql, [id], (err, result) => {
@@ -36,9 +34,8 @@ exports.deleteEmpresa = (req, res) => {
     });
 };
 
-
 // Función para obtener todas las empresas
-exports.getEmpresas = (req, res) => {
+export const getEmpresas = (req, res) => {
     const sql = 'SELECT * FROM empresas';
     db.query(sql, (err, results) => {
         if (err) {
@@ -50,9 +47,8 @@ exports.getEmpresas = (req, res) => {
     });
 };
 
-
 // Función para obtener una empresa específica por ID
-exports.getEmpresaById = (req, res) => {
+export const getEmpresaById = (req, res) => {
     const { id } = req.params;
     const sql = 'SELECT * FROM empresas WHERE empresa_id = ?';
     db.query(sql, [id], (err, result) => {
@@ -67,9 +63,8 @@ exports.getEmpresaById = (req, res) => {
     });
 };
 
-
 // Función para actualizar una empresa por ID
-exports.updateEmpresa = (req, res) => {
+export const updateEmpresa = (req, res) => {
     const { id } = req.params;
     const { nombre, descripcion, industria, webpage } = req.body;
     const sql = 'UPDATE empresas SET nombre = ?, descripcion = ?, industria = ?, webpage = ? WHERE empresa_id = ?';
