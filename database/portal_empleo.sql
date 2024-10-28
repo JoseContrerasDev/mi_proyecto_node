@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2024 a las 16:33:26
+-- Tiempo de generación: 28-10-2024 a las 22:16:40
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -175,6 +175,27 @@ CREATE TABLE `postulaciones` (
   `fecha_postulacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `usuario_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`usuario_id`, `email`, `password`, `created_at`) VALUES
+(1, 'juan.perez@example.com', '$2b$10$HkV6aLpX9bQDX4IqsdIOROpr5MTcVb3B4oAyF1mDQbWiWK96XZ4Wu', '2024-10-28 19:51:02'),
+(3, 'josecontreras@example.com', '$2b$10$xLTgKXLeOHsZscG.pa3X6uLjltAgbWmq1FeG1VHynsvXmB/Uoqk1K', '2024-10-28 19:52:15');
+
 --
 -- Índices para tablas volcadas
 --
@@ -227,6 +248,13 @@ ALTER TABLE `postulaciones`
   ADD KEY `oferta_id` (`oferta_id`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`usuario_id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -271,6 +299,12 @@ ALTER TABLE `perfiles_estudiantes`
 --
 ALTER TABLE `postulaciones`
   MODIFY `postulacion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
