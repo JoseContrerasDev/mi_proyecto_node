@@ -1,7 +1,12 @@
 // controllers/estudianteController.js
 const db = require('../db');
 
-// Función para crear un nuevo estudiante
+//SI EL USUARIO ELIGE SER ESTUDIANTE ESCUPIR ESTE FORMULARIO AL FRONT//
+
+
+
+// Función para CREAR un nuevo estudiante//
+
 exports.createEstudiante = (req, res) => {
     const { nombre, email, password } = req.body;
     const sql = 'INSERT INTO estudiantes (nombre, email, password) VALUES (?, ?, ?)';

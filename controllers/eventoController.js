@@ -14,7 +14,8 @@ exports.getEventos = (req, res) => {
     });
 };
 
-// Función para crear un nuevo evento
+// Función para crear un nuevo evento//
+
 exports.createEvento = (req, res) => {
     const { titulo, descripcion, evento_date, localidad, organizador_id, organizador_type } = req.body;
     const sql = 'INSERT INTO eventos (titulo, descripcion, evento_date, localidad, organizador_id, organizador_type) VALUES (?, ?, ?, ?, ?, ?)';

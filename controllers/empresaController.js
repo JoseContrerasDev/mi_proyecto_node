@@ -1,10 +1,18 @@
 // controllers/empresaController.js
 const db = require('../db');
 
+
+//SI EL USUARIO ELIGE SER EMPRESA ESCUPIR ESTE FORMULARIO AL FRONT//
+
 exports.createEmpresa = (req, res) => {
-    const { nombre, descripcion, industria, webpage } = req.body;
-    const sql = 'INSERT INTO empresas (nombre, descripcion, industria, webpage) VALUES (?, ?, ?, ?)';
-    db.query(sql, [nombre, descripcion, industria, webpage], (err, result) => {
+    const { nombre, direccion, telefono, contacto_principal, email, password, descripcion, industria, webpage } = req.body;
+    
+    const sql = `
+        INSERT INTO empresas (nombre, direccion, telefono, contacto_principal, email, password, descripcion, industria, webpage) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(sql, [nombre, direccion, telefono, contacto_principal, email, password, descripcion, industria, webpage], (err, result) => {
         if (err) {
             console.error('Error al insertar la empresa:', err);
             res.status(500).json({ error: 'Error al insertar la empresa' });
@@ -13,7 +21,6 @@ exports.createEmpresa = (req, res) => {
         }
     });
 };
-
 
 // Función para eliminar una empresa por ID
 exports.deleteEmpresa = (req, res) => {

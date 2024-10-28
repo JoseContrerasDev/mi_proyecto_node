@@ -14,6 +14,24 @@ exports.getOfertas = (req, res) => {
     });
 };
 
+
+// Función para CREAR una oferta //
+
+exports.createOferta = (req, res) => {
+    const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
+    const sql = 'INSERT INTO ofertas (titulo, descripcion, modalidad, requisitos, localidad) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad], (err, result) => {
+        if (err) {
+            console.error('Error al crear la oferta:', err);
+            res.status(500).json({ error: 'Error al crear la oferta' });
+        } else {
+            res.json({ id: result.insertId, titulo, descripcion, modalidad, requisitos, localidad });
+        }
+    });
+};
+
+
+
 // Función para obtener una oferta específica por ID
 exports.getOfertaById = (req, res) => {
     const { id } = req.params;
@@ -30,19 +48,6 @@ exports.getOfertaById = (req, res) => {
     });
 };
 
-// Función para crear una oferta
-exports.createOferta = (req, res) => {
-    const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
-    const sql = 'INSERT INTO ofertas (titulo, descripcion, modalidad, requisitos, localidad) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad], (err, result) => {
-        if (err) {
-            console.error('Error al crear la oferta:', err);
-            res.status(500).json({ error: 'Error al crear la oferta' });
-        } else {
-            res.json({ id: result.insertId, titulo, descripcion, modalidad, requisitos, localidad });
-        }
-    });
-};
 
 // Función para eliminar una oferta
 exports.deleteOferta = (req, res) => {

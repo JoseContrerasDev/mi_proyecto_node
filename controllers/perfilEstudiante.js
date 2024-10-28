@@ -1,7 +1,8 @@
 // controllers/perfilEstudianteController.js
 const db = require('../db');
 
-// Función para crear un nuevo perfil de estudiante
+// Función para CREAR un nuevo perfil de estudiante//
+
 exports.createPerfilEstudiante = (req, res) => {
     const { estudiante_id, habilidades, intereses, disponibilidad, experiencia } = req.body;
     const sql = 'INSERT INTO perfiles_estudiantes (estudiante_id, habilidades, intereses, disponibilidad, experiencia) VALUES (?, ?, ?, ?, ?)';

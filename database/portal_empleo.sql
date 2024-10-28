@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2024 a las 09:26:03
+-- Tiempo de generación: 28-10-2024 a las 16:33:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -30,6 +30,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `empresas` (
   `empresa_id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `contacto_principal` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `descripcion` text DEFAULT NULL,
   `industria` varchar(255) DEFAULT NULL,
   `webpage` varchar(255) DEFAULT NULL,
@@ -40,8 +45,10 @@ CREATE TABLE `empresas` (
 -- Volcado de datos para la tabla `empresas`
 --
 
-INSERT INTO `empresas` (`empresa_id`, `nombre`, `descripcion`, `industria`, `webpage`, `actualizacion`) VALUES
-(1, 'Compliance Eng. serv.', 'Empresa dedicada a la tecnología', 'Tecnología', 'https://www.empresaxyz.com', '2024-10-28 04:30:37');
+INSERT INTO `empresas` (`empresa_id`, `nombre`, `direccion`, `telefono`, `contacto_principal`, `email`, `password`, `descripcion`, `industria`, `webpage`, `actualizacion`) VALUES
+(1, 'Compliance Eng. serv.', NULL, NULL, NULL, NULL, NULL, 'Empresa dedicada a la tecnología', 'Tecnología', 'https://www.empresaxyz.com', '2024-10-28 04:30:37'),
+(2, 'Arcor', NULL, NULL, NULL, NULL, NULL, 'Empresa de golosinas', 'Consumible', 'arcor.com.ar', '2024-10-28 14:24:25'),
+(3, 'Tech Solutions', '123 Calle Principal, Ciudad Tecnológica', '+54 9 1234 567890', 'Carlos Pérez', 'contacto@techsolutions.com', 'segura123', 'Empresa especializada en soluciones de tecnología avanzada', 'Tecnología', 'https://www.techsolutions.com', '2024-10-28 15:29:22');
 
 -- --------------------------------------------------------
 
@@ -135,7 +142,6 @@ CREATE TABLE `ofertas` (
 --
 
 INSERT INTO `ofertas` (`oferta_id`, `empresa_id`, `titulo`, `descripcion`, `modalidad`, `requisitos`, `localidad`, `actualizacion`) VALUES
-(1, 1, '', '', '', NULL, NULL, '2024-10-28 05:00:38'),
 (2, 1, 'Desarrollador Backend', 'Responsable de desarrollar la API', '', 'Conocimiento en Node.js y MySQL', 'virtual', '2024-10-28 05:17:04');
 
 -- --------------------------------------------------------
@@ -228,13 +234,13 @@ ALTER TABLE `postulaciones`
 -- AUTO_INCREMENT de la tabla `empresas`
 --
 ALTER TABLE `empresas`
-  MODIFY `empresa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `empresa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `estudiante_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `estudiante_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `eventos`
@@ -252,7 +258,7 @@ ALTER TABLE `mensajes`
 -- AUTO_INCREMENT de la tabla `ofertas`
 --
 ALTER TABLE `ofertas`
-  MODIFY `oferta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `oferta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `perfiles_estudiantes`

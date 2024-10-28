@@ -1,7 +1,8 @@
 // controllers/postulacionController.js
 const db = require('../db');
 
-// Función para crear una nueva postulación
+// Función para CREAR una nueva postulación//
+
 exports.createPostulacion = (req, res) => {
     const { estudiante_id, oferta_id, carta_presentacion, cv_url, estado } = req.body;
     const sql = 'INSERT INTO postulaciones (estudiante_id, oferta_id, carta_presentacion, cv_url, estado) VALUES (?, ?, ?, ?, ?)';
