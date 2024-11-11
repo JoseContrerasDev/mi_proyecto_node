@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2024 a las 22:16:40
+-- Tiempo de generación: 11-11-2024 a las 09:31:37
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -48,7 +48,8 @@ CREATE TABLE `empresas` (
 INSERT INTO `empresas` (`empresa_id`, `nombre`, `direccion`, `telefono`, `contacto_principal`, `email`, `password`, `descripcion`, `industria`, `webpage`, `actualizacion`) VALUES
 (1, 'Compliance Eng. serv.', NULL, NULL, NULL, NULL, NULL, 'Empresa dedicada a la tecnología', 'Tecnología', 'https://www.empresaxyz.com', '2024-10-28 04:30:37'),
 (2, 'Arcor', NULL, NULL, NULL, NULL, NULL, 'Empresa de golosinas', 'Consumible', 'arcor.com.ar', '2024-10-28 14:24:25'),
-(3, 'Tech Solutions', '123 Calle Principal, Ciudad Tecnológica', '+54 9 1234 567890', 'Carlos Pérez', 'contacto@techsolutions.com', 'segura123', 'Empresa especializada en soluciones de tecnología avanzada', 'Tecnología', 'https://www.techsolutions.com', '2024-10-28 15:29:22');
+(3, 'Tech Solutions', '123 Calle Principal, Ciudad Tecnológica', '+54 9 1234 567890', 'Carlos Pérez', 'contacto@techsolutions.com', 'segura123', 'Empresa especializada en soluciones de tecnología avanzada', 'Tecnología', 'https://www.techsolutions.com', '2024-10-28 15:29:22'),
+(4, 'Pepa soluciones', '123 Calle secu, Ciudad', '+1234567890', 'Juan Pérez', 'contacto@techsolutions.com', 'contraseñaSegura123', 'Empresa dedicada a soluciones tecnológicas', 'Tecnología', 'https://www.techsolutions.com', '2024-11-07 01:45:36');
 
 -- --------------------------------------------------------
 
@@ -128,7 +129,6 @@ INSERT INTO `mensajes` (`mensaje_id`, `remitente_id`, `tipo_remitente`, `recepto
 
 CREATE TABLE `ofertas` (
   `oferta_id` int(11) NOT NULL,
-  `empresa_id` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `descripcion` text NOT NULL,
   `modalidad` enum('full-time','part-time','internship') NOT NULL,
@@ -141,39 +141,8 @@ CREATE TABLE `ofertas` (
 -- Volcado de datos para la tabla `ofertas`
 --
 
-INSERT INTO `ofertas` (`oferta_id`, `empresa_id`, `titulo`, `descripcion`, `modalidad`, `requisitos`, `localidad`, `actualizacion`) VALUES
-(2, 1, 'Desarrollador Backend', 'Responsable de desarrollar la API', '', 'Conocimiento en Node.js y MySQL', 'virtual', '2024-10-28 05:17:04');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `perfiles_estudiantes`
---
-
-CREATE TABLE `perfiles_estudiantes` (
-  `perfil_id` int(11) NOT NULL,
-  `estudiante_id` int(11) NOT NULL,
-  `habilidades` text DEFAULT NULL,
-  `intereses` text DEFAULT NULL,
-  `disponibilidad` enum('full-time','part-time','internship') NOT NULL,
-  `experiencia` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `postulaciones`
---
-
-CREATE TABLE `postulaciones` (
-  `postulacion_id` int(11) NOT NULL,
-  `estudiante_id` int(11) NOT NULL,
-  `oferta_id` int(11) NOT NULL,
-  `carta_presentacion` text DEFAULT NULL,
-  `cv_url` varchar(255) DEFAULT NULL,
-  `estado` enum('pending','reviewed','accepted','rejected') DEFAULT 'pending',
-  `fecha_postulacion` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `ofertas` (`oferta_id`, `titulo`, `descripcion`, `modalidad`, `requisitos`, `localidad`, `actualizacion`) VALUES
+(2, 'Desarrollador Backend', 'Responsable de desarrollar la API', '', 'Conocimiento en Node.js y MySQL', 'virtual', '2024-10-28 05:17:04');
 
 -- --------------------------------------------------------
 
@@ -194,7 +163,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`usuario_id`, `email`, `password`, `created_at`) VALUES
 (1, 'juan.perez@example.com', '$2b$10$HkV6aLpX9bQDX4IqsdIOROpr5MTcVb3B4oAyF1mDQbWiWK96XZ4Wu', '2024-10-28 19:51:02'),
-(3, 'josecontreras@example.com', '$2b$10$xLTgKXLeOHsZscG.pa3X6uLjltAgbWmq1FeG1VHynsvXmB/Uoqk1K', '2024-10-28 19:52:15');
+(3, 'josecontreras@example.com', '$2b$10$xLTgKXLeOHsZscG.pa3X6uLjltAgbWmq1FeG1VHynsvXmB/Uoqk1K', '2024-10-28 19:52:15'),
+(4, 'barrios@gmail.com', '$2b$10$DPZJ/cHsYD0qPC2zzIRE0e1oxyn9cgOIZnktcpHiMNQcxvD47QBJq', '2024-11-07 03:55:04');
 
 --
 -- Índices para tablas volcadas
@@ -229,23 +199,7 @@ ALTER TABLE `mensajes`
 -- Indices de la tabla `ofertas`
 --
 ALTER TABLE `ofertas`
-  ADD PRIMARY KEY (`oferta_id`),
-  ADD KEY `empresa_id` (`empresa_id`);
-
---
--- Indices de la tabla `perfiles_estudiantes`
---
-ALTER TABLE `perfiles_estudiantes`
-  ADD PRIMARY KEY (`perfil_id`),
-  ADD KEY `estudiante_id` (`estudiante_id`);
-
---
--- Indices de la tabla `postulaciones`
---
-ALTER TABLE `postulaciones`
-  ADD PRIMARY KEY (`postulacion_id`),
-  ADD KEY `estudiante_id` (`estudiante_id`),
-  ADD KEY `oferta_id` (`oferta_id`);
+  ADD PRIMARY KEY (`oferta_id`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -262,72 +216,38 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `empresas`
 --
 ALTER TABLE `empresas`
-  MODIFY `empresa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `empresa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `estudiante_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `estudiante_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `evento_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `evento_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `mensaje_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `mensaje_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ofertas`
 --
 ALTER TABLE `ofertas`
-  MODIFY `oferta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `oferta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
---
--- AUTO_INCREMENT de la tabla `perfiles_estudiantes`
---
-ALTER TABLE `perfiles_estudiantes`
-  MODIFY `perfil_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `postulaciones`
---
-ALTER TABLE `postulaciones`
-  MODIFY `postulacion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `ofertas`
---
-ALTER TABLE `ofertas`
-  ADD CONSTRAINT `ofertas_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`empresa_id`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `perfiles_estudiantes`
---
-ALTER TABLE `perfiles_estudiantes`
-  ADD CONSTRAINT `perfiles_estudiantes_ibfk_1` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiantes` (`estudiante_id`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `postulaciones`
---
-ALTER TABLE `postulaciones`
-  ADD CONSTRAINT `postulaciones_ibfk_1` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiantes` (`estudiante_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `postulaciones_ibfk_2` FOREIGN KEY (`oferta_id`) REFERENCES `ofertas` (`oferta_id`) ON DELETE CASCADE;
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
