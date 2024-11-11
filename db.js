@@ -10,7 +10,7 @@ const db = mysql.createConnection({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
-});
+}).promise();
 
 
 db.connect((err) => {

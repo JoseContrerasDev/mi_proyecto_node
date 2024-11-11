@@ -1,58 +1,87 @@
-// authControllers.js
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import db from '../db.js';
+import connection from "../db.js"; // Importar la conexión a la base de datos.
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-const saltRounds = 10;
-
-// Función para registrar usuarios
 export const register = async (req, res) => {
+  try {
     const { email, password } = req.body;
 
-    try {
-        // Cifrar la contraseña
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-        // Insertar el usuario en la base de datos
-        const sql = 'INSERT INTO usuarios (email, password) VALUES (?, ?)';
-        await db.query(sql, [email, hashedPassword]);
-
-        // Respuesta de éxito
-        res.status(201).json({ message: 'Usuario registrado exitosamente' });
-    } catch (error) {
-        console.error(error); // Log para depuración
-        res.status(500).json({ error: 'Error al registrar usuario' });
+    // Campos obligatorios
+    if (!email || !password) {
+      throw "Debe completar todos los campos para registrarse.";
     }
+
+    console.log(email, password);
+
+    // Chequeo que el mail no esté en uso
+    const [rows] = await connection.query(
+      "SELECT * FROM usuarios WHERE email = ?",
+      [email]
+    );
+
+    // Si hay un resultado, ya existe
+    if (rows.length !== 0) {
+      throw "El correo electrónico ya se encuentra en uso.";
+    }
+
+    // Encripto la contraseña
+    const hashPassword = bcrypt.hashSync(password, 8);
+
+    // Inserto el nuevo usuario en la base de datos
+    const result = await connection.query(
+      "INSERT INTO usuarios (email, password) VALUES (?, ?)",
+      [email, hashPassword]
+    );
+    res.status(201).send({
+      error: false,
+      body: [{ id: result[0].insertId }],
+      message: "Usuario creado exitosamente",
+    });
+  } catch (error) {
+    console.error("❌ Error al registrar usuario: ", error);
+    res
+      .status(error.status || 500)
+      .send({ error: true, body: null, message: error.message || error });
+  }
 };
 
-// Función para iniciar sesión de usuario
 export const login = async (req, res) => {
+  try {
     const { email, password } = req.body;
-
-    try {
-        // Buscar el usuario por correo electrónico
-        const sql = 'SELECT * FROM usuarios WHERE email = ?';
-        const [results] = await db.query(sql, [email]);
-
-        if (results.length === 0) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-
-        const user = results[0];
-
-        // Verificar la contraseña
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ error: 'Contraseña incorrecta' });
-        }
-
-        // Generar un token JWT
-        const token = jwt.sign({ id: user.usuario_id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-
-        // Responder con el token
-        res.json({ message: 'Inicio de sesión exitoso', token });
-    } catch (error) {
-        console.error(error); // Log para depuración
-        res.status(500).json({ error: 'Error en el inicio de sesión' });
+    if (!email || !password) {
+      throw "Debe completar todos los campos.";
     }
+
+    // Chequeo que el usuario exista
+    const [rows] = await connection.query(
+      "SELECT * FROM usuarios WHERE email = ?",
+      [email]
+    );
+
+    // Si no hay resultados
+    if (!rows.length) {
+      throw "El correo o la contraseña son incorrectos.";
+    }
+
+    // Comparo la contraseña ingresada con la almacenada
+    const passwordIsValid = bcrypt.compareSync(password, rows[0].password);
+
+    if (!passwordIsValid) {
+      throw "El correo o la contraseña son incorrectos.";
+    }
+
+    // Genero el token de autenticación
+    const token = jwt.sign({ id: rows[0].usuario_id }, process.env.SECRET_KEY, {});
+
+    res.status(200).send({
+      error: false,
+      body: [{ token }],
+      message: "Inicio de sesión exitoso.",
+    });
+  } catch (error) {
+    console.error("❌ Error al iniciar sesión: ", error);
+    res
+      .status(error.status || 500)
+      .send({ error: true, body: null, message: error.message || error });
+  }
 };

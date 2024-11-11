@@ -1,5 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 //import { getItems, createItem, deleteItem } from'./controllers/item_controller';
 import { createEstudiante, deleteEstudiante, getEstudiantes, getEstudianteById, updateEstudiante } from './controllers/estudiantesController.js';
