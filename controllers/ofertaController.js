@@ -1,4 +1,3 @@
-// controllers/ofertaController.js
 import db from '../db.js';
 
 // Función para obtener todas las ofertas
@@ -30,18 +29,16 @@ export const getOfertaById = (req, res) => {
     });
 };
 
-
-
 // Función para crear una nueva oferta
 export const createOferta = (req, res) => {
-    const { titulo, descripcion, salario, empresa_id, ubicacion } = req.body;
-    const sql = 'INSERT INTO ofertas (titulo, descripcion, salario, empresa_id, ubicacion) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [titulo, descripcion, salario, empresa_id, ubicacion], (err, result) => {
+    const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
+    const sql = 'INSERT INTO ofertas (titulo, descripcion, modalidad, requisitos, localidad) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad], (err, result) => {
         if (err) {
             console.error('Error al crear la oferta:', err);
             res.status(500).json({ error: 'Error al crear la oferta' });
         } else {
-            res.json({ id: result.insertId, titulo, descripcion, salario, empresa_id, ubicacion });
+            res.json({ id: result.insertId, titulo, descripcion, modalidad, requisitos, localidad });
         }
     });
 };
@@ -63,9 +60,9 @@ export const deleteOferta = (req, res) => {
 // Función para actualizar una oferta por ID
 export const updateOferta = (req, res) => {
     const { id } = req.params;
-    const { titulo, descripcion, salario, ubicacion } = req.body;
-    const sql = 'UPDATE ofertas SET titulo = ?, descripcion = ?, salario = ?, ubicacion = ? WHERE oferta_id = ?';
-    db.query(sql, [titulo, descripcion, salario, ubicacion, id], (err, result) => {
+    const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
+    const sql = 'UPDATE ofertas SET titulo = ?, descripcion = ?, modalidad = ?, requisitos = ?, localidad = ? WHERE oferta_id = ?';
+    db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad, id], (err, result) => {
         if (err) {
             console.error('Error al actualizar la oferta:', err);
             res.status(500).json({ error: 'Error al actualizar la oferta' });
