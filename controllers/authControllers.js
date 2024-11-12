@@ -5,33 +5,32 @@ import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const imageLink = req.file ? `/uploads/${req.file.filename}` : null; // Ruta de la imagen subida
 
-    // Campos obligatorios
+    // Verificación de campos obligatorios
     if (!email || !password) {
       throw "Debe completar todos los campos para registrarse.";
     }
 
-    console.log(email, password);
-
-    // Chequeo que el mail no esté en uso
+    // Chequeo de existencia del correo electrónico
     const [rows] = await connection.query(
       "SELECT * FROM usuarios WHERE email = ?",
       [email]
     );
 
-    // Si hay un resultado, ya existe
     if (rows.length !== 0) {
       throw "El correo electrónico ya se encuentra en uso.";
     }
 
-    // Encripto la contraseña
+    // Encriptar la contraseña
     const hashPassword = bcrypt.hashSync(password, 8);
 
-    // Inserto el nuevo usuario en la base de datos
+    // Inserción del nuevo usuario en la base de datos con imagen opcional
     const result = await connection.query(
-      "INSERT INTO usuarios (email, password) VALUES (?, ?)",
-      [email, hashPassword]
+      "INSERT INTO usuarios (email, password, image) VALUES (?, ?, ?)",
+      [email, hashPassword, imageLink]
     );
+
     res.status(201).send({
       error: false,
       body: [{ id: result[0].insertId }],
@@ -48,29 +47,29 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
       throw "Debe completar todos los campos.";
     }
 
-    // Chequeo que el usuario exista
+    // Verificación de existencia del usuario
     const [rows] = await connection.query(
       "SELECT * FROM usuarios WHERE email = ?",
       [email]
     );
 
-    // Si no hay resultados
     if (!rows.length) {
       throw "El correo o la contraseña son incorrectos.";
     }
 
-    // Comparo la contraseña ingresada con la almacenada
+    // Validación de la contraseña
     const passwordIsValid = bcrypt.compareSync(password, rows[0].password);
 
     if (!passwordIsValid) {
       throw "El correo o la contraseña son incorrectos.";
     }
 
-    // Genero el token de autenticación
+    // Generación del token de autenticación
     const token = jwt.sign({ id: rows[0].usuario_id }, process.env.SECRET_KEY, {});
 
     res.status(200).send({
