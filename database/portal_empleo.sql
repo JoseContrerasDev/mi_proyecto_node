@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2024 a las 09:31:37
+-- Tiempo de generación: 12-11-2024 a las 06:00:46
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -154,17 +154,20 @@ CREATE TABLE `usuarios` (
   `usuario_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`usuario_id`, `email`, `password`, `created_at`) VALUES
-(1, 'juan.perez@example.com', '$2b$10$HkV6aLpX9bQDX4IqsdIOROpr5MTcVb3B4oAyF1mDQbWiWK96XZ4Wu', '2024-10-28 19:51:02'),
-(3, 'josecontreras@example.com', '$2b$10$xLTgKXLeOHsZscG.pa3X6uLjltAgbWmq1FeG1VHynsvXmB/Uoqk1K', '2024-10-28 19:52:15'),
-(4, 'barrios@gmail.com', '$2b$10$DPZJ/cHsYD0qPC2zzIRE0e1oxyn9cgOIZnktcpHiMNQcxvD47QBJq', '2024-11-07 03:55:04');
+INSERT INTO `usuarios` (`usuario_id`, `email`, `password`, `created_at`, `image`) VALUES
+(1, 'juan.perez@example.com', '$2b$10$HkV6aLpX9bQDX4IqsdIOROpr5MTcVb3B4oAyF1mDQbWiWK96XZ4Wu', '2024-10-28 19:51:02', NULL),
+(3, 'josecontreras@example.com', '$2b$10$xLTgKXLeOHsZscG.pa3X6uLjltAgbWmq1FeG1VHynsvXmB/Uoqk1K', '2024-10-28 19:52:15', NULL),
+(4, 'barrios@gmail.com', '$2b$10$DPZJ/cHsYD0qPC2zzIRE0e1oxyn9cgOIZnktcpHiMNQcxvD47QBJq', '2024-11-07 03:55:04', NULL),
+(9, 'mansilla_223@hotmail.com', '$2a$08$aXnCQRphUBpwKD2iRmQAUerjr0Hq5lQ0BcKFM1084RoSeX6qITcDO', '2024-11-11 09:09:47', NULL),
+(10, 'joseph@gmail.com', '$2a$08$eumNW9j75kYP8Kup98S1DuV6HeXxt2pvYkY1iPi6m7L.cGOWqpc.W', '2024-11-12 04:58:37', '/uploads/1731387517120-485181329-foto.png');
 
 --
 -- Índices para tablas volcadas
@@ -242,12 +245,11 @@ ALTER TABLE `mensajes`
 ALTER TABLE `ofertas`
   MODIFY `oferta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
-
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
