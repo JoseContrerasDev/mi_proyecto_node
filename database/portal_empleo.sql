@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2024 a las 06:00:46
+-- Tiempo de generación: 12-11-2024 a las 20:41:40
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -167,7 +167,12 @@ INSERT INTO `usuarios` (`usuario_id`, `email`, `password`, `created_at`, `image`
 (3, 'josecontreras@example.com', '$2b$10$xLTgKXLeOHsZscG.pa3X6uLjltAgbWmq1FeG1VHynsvXmB/Uoqk1K', '2024-10-28 19:52:15', NULL),
 (4, 'barrios@gmail.com', '$2b$10$DPZJ/cHsYD0qPC2zzIRE0e1oxyn9cgOIZnktcpHiMNQcxvD47QBJq', '2024-11-07 03:55:04', NULL),
 (9, 'mansilla_223@hotmail.com', '$2a$08$aXnCQRphUBpwKD2iRmQAUerjr0Hq5lQ0BcKFM1084RoSeX6qITcDO', '2024-11-11 09:09:47', NULL),
-(10, 'joseph@gmail.com', '$2a$08$eumNW9j75kYP8Kup98S1DuV6HeXxt2pvYkY1iPi6m7L.cGOWqpc.W', '2024-11-12 04:58:37', '/uploads/1731387517120-485181329-foto.png');
+(10, 'joseph@gmail.com', '$2a$08$eumNW9j75kYP8Kup98S1DuV6HeXxt2pvYkY1iPi6m7L.cGOWqpc.W', '2024-11-12 04:58:37', '/uploads/1731387517120-485181329-foto.png'),
+(11, 'multer@gmail.com', '$2a$08$M8cJ3VkyYvuFI.9BrCXPqOhUE4L99g8phGujIj7NK3cEuKRlCk1o6', '2024-11-12 05:02:30', '/uploads/1731387750228-485804330-inicio.png'),
+(12, 'vscode@gmail.com', '$2a$08$h7S8APmmgJEgtVWSSC01B.KKP83CW0h0H./EHwsRIXnT9bLZjIdiK', '2024-11-12 18:41:55', NULL),
+(13, 'vscode2@gmail.com', '$2a$08$6uXToHUaGGS94zGlVglvLebiv9SoAQXKbmJmQQjMPnGqeS4JaXa1G', '2024-11-12 18:48:23', NULL),
+(14, 'vscode3@gmail.com', '$2a$08$Vt2yd7zzY0HQlvoMQWVbzek.eoamAr0T4IbeCtQOdUl5K1GZUa6Z6', '2024-11-12 18:54:47', NULL),
+(15, 'zorrito@gmail.com', '$2a$08$iTqUm8ZYB0Ja4VT8.QAE.ueTJRIccNWiNMGtUfM59WoqVfGVs913K', '2024-11-12 18:57:20', '/uploads/1731437840765-94471721-zorrito.PNG');
 
 --
 -- Índices para tablas volcadas
@@ -249,7 +254,7 @@ ALTER TABLE `ofertas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
