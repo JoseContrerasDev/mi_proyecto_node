@@ -1,26 +1,24 @@
-// middleware/upload.js
-import multer from "multer";
-import path from "path";
+import multer from 'multer';
+import path from 'path';
 
-// Configuración del almacenamiento de imágenes
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Directorio donde se guardarán las imágenes
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Nombre único para evitar conflictos
-  }
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Directorio donde se guardarán las imágenes
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname); // Nombre único
+    }
 });
 
-const fileFilter = (req, file, cb) => {
-  // Aceptar solo archivos de tipo imagen
-  if (file.mimetype.startsWith('image/')) {
-    cb(null, true);
-  } else {
-    cb(new Error("Formato de archivo no permitido"), false);
-  }
-};
-
-const upload = multer({ storage, fileFilter });
+const upload = multer({ 
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
+            return cb(new Error('Solo se permiten imágenes (png, jpg, jpeg)'));
+        }
+        cb(null, true);
+    }
+});
 
 export default upload;

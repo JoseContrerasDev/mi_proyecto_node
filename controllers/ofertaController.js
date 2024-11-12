@@ -1,73 +1,74 @@
 import db from '../db.js';
 
 // Función para obtener todas las ofertas
-export const getOfertas = (req, res) => {
-    const sql = 'SELECT * FROM ofertas';
-    db.query(sql, (err, results) => {
-        if (err) {
-            console.error('Error al obtener las ofertas:', err);
-            res.status(500).json({ error: 'Error al obtener las ofertas' });
-        } else {
-            res.json(results); // Enviar todas las ofertas como JSON
-        }
-    });
+export const getOfertas = async (req, res) => {
+    try {
+        const sql = 'SELECT * FROM ofertas';
+        const [results] = await db.query(sql);
+        res.json(results); // Enviar todas las ofertas como JSON
+    } catch (err) {
+        console.error('Error al obtener las ofertas:', err);
+        res.status(500).json({ error: 'Error al obtener las ofertas' });
+    }
 };
 
 // Función para obtener una oferta específica por ID
-export const getOfertaById = (req, res) => {
-    const { id } = req.params;
-    const sql = 'SELECT * FROM ofertas WHERE oferta_id = ?';
-    db.query(sql, [id], (err, result) => {
-        if (err) {
-            console.error('Error al obtener la oferta:', err);
-            res.status(500).json({ error: 'Error al obtener la oferta' });
-        } else if (result.length === 0) {
+export const getOfertaById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = 'SELECT * FROM ofertas WHERE oferta_id = ?';
+        const [result] = await db.query(sql, [id]);
+
+        if (result.length === 0) {
             res.status(404).json({ message: 'Oferta no encontrada' });
         } else {
             res.json(result[0]); // Enviar solo la oferta encontrada
         }
-    });
+    } catch (err) {
+        console.error('Error al obtener la oferta:', err);
+        res.status(500).json({ error: 'Error al obtener la oferta' });
+    }
 };
 
 // Función para crear una nueva oferta
-export const createOferta = (req, res) => {
-    const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
-    const sql = 'INSERT INTO ofertas (titulo, descripcion, modalidad, requisitos, localidad) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad], (err, result) => {
-        if (err) {
-            console.error('Error al crear la oferta:', err);
-            res.status(500).json({ error: 'Error al crear la oferta' });
-        } else {
-            res.json({ id: result.insertId, titulo, descripcion, modalidad, requisitos, localidad });
-        }
-    });
+export const createOferta = async (req, res) => {
+    try {
+        const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
+        const sql = 'INSERT INTO ofertas (titulo, descripcion, modalidad, requisitos, localidad) VALUES (?, ?, ?, ?, ?)';
+        
+        const [result] = await db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad]);
+        res.json({ id: result.insertId, titulo, descripcion, modalidad, requisitos, localidad });
+    } catch (err) {
+        console.error('Error al crear la oferta:', err);
+        res.status(500).json({ error: 'Error al crear la oferta' });
+    }
 };
 
 // Función para eliminar una oferta por ID
-export const deleteOferta = (req, res) => {
-    const { id } = req.params;
-    const sql = 'DELETE FROM ofertas WHERE oferta_id = ?';
-    db.query(sql, [id], (err, result) => {
-        if (err) {
-            console.error('Error al eliminar la oferta:', err);
-            res.status(500).json({ error: 'Error al eliminar la oferta' });
-        } else {
-            res.json({ message: `Oferta con ID ${id} eliminada` });
-        }
-    });
+export const deleteOferta = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = 'DELETE FROM ofertas WHERE oferta_id = ?';
+        
+        const [result] = await db.query(sql, [id]);
+        res.json({ message: `Oferta con ID ${id} eliminada` });
+    } catch (err) {
+        console.error('Error al eliminar la oferta:', err);
+        res.status(500).json({ error: 'Error al eliminar la oferta' });
+    }
 };
 
 // Función para actualizar una oferta por ID
-export const updateOferta = (req, res) => {
-    const { id } = req.params;
-    const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
-    const sql = 'UPDATE ofertas SET titulo = ?, descripcion = ?, modalidad = ?, requisitos = ?, localidad = ? WHERE oferta_id = ?';
-    db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad, id], (err, result) => {
-        if (err) {
-            console.error('Error al actualizar la oferta:', err);
-            res.status(500).json({ error: 'Error al actualizar la oferta' });
-        } else {
-            res.json({ message: `Oferta con ID ${id} actualizada` });
-        }
-    });
+export const updateOferta = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { titulo, descripcion, modalidad, requisitos, localidad } = req.body;
+        const sql = 'UPDATE ofertas SET titulo = ?, descripcion = ?, modalidad = ?, requisitos = ?, localidad = ? WHERE oferta_id = ?';
+        
+        const [result] = await db.query(sql, [titulo, descripcion, modalidad, requisitos, localidad, id]);
+        res.json({ message: `Oferta con ID ${id} actualizada` });
+    } catch (err) {
+        console.error('Error al actualizar la oferta:', err);
+        res.status(500).json({ error: 'Error al actualizar la oferta' });
+    }
 };

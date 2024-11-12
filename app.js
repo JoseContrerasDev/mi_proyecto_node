@@ -4,26 +4,11 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import { register, login } from './controllers/authControllers.js';
 import { authMiddleware } from './middleware/authMiddleware.js';
-
-import { 
-    createEstudiante, deleteEstudiante, getEstudiantes, getEstudianteById, updateEstudiante 
-} from './controllers/estudiantesController.js';
-
-import { 
-    createEmpresa, getEmpresas, getEmpresaById, deleteEmpresa, updateEmpresa 
-} from './controllers/empresaController.js';
-
-import { 
-    getOfertas, getOfertaById, createOferta, deleteOferta, updateOferta 
-} from './controllers/ofertaController.js';
-
-import { 
-    getEventos, getEventoById, createEvento, deleteEvento, updateEvento 
-} from './controllers/eventoController.js';
-
-import { 
-    getMensajes, getMensajeById, createMensaje, updateMensaje, deleteMensaje 
-} from './controllers/mensajesController.js';
+import { createEstudiante, deleteEstudiante, getEstudiantes, getEstudianteById, updateEstudiante } from './controllers/estudiantesController.js';
+import { createEmpresa, getEmpresas, getEmpresaById, deleteEmpresa, updateEmpresa } from './controllers/empresaController.js';
+import { getOfertas, getOfertaById, createOferta, deleteOferta, updateOferta } from './controllers/ofertaController.js';
+import { getEventos, getEventoById, createEvento, deleteEvento, updateEvento } from './controllers/eventoController.js';
+import { getMensajes, getMensajeById, createMensaje, updateMensaje, deleteMensaje } from './controllers/mensajesController.js';
 
 // Configuración de dotenv
 dotenv.config();
@@ -38,8 +23,8 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname);
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + '-' + file.originalname;
+        cb(null, uniqueSuffix);
     }
 });
 
@@ -50,7 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads')); // Habilita el acceso a las imágenes cargadas
 
-// Rutas de autenticación
+// Rutas de autenticación con carga de imágenes en el registro
 app.post('/register', upload.single('image'), register);
 app.post('/login', login);
 

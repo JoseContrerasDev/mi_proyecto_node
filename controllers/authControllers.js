@@ -9,7 +9,7 @@ export const register = async (req, res) => {
 
     // Verificación de campos obligatorios
     if (!email || !password) {
-      throw "Debe completar todos los campos para registrarse.";
+      throw new Error("Debe completar todos los campos para registrarse.");
     }
 
     // Chequeo de existencia del correo electrónico
@@ -19,7 +19,7 @@ export const register = async (req, res) => {
     );
 
     if (rows.length !== 0) {
-      throw "El correo electrónico ya se encuentra en uso.";
+      throw new Error("El correo electrónico ya se encuentra en uso.");
     }
 
     // Encriptar la contraseña
@@ -37,10 +37,8 @@ export const register = async (req, res) => {
       message: "Usuario creado exitosamente",
     });
   } catch (error) {
-    console.error("❌ Error al registrar usuario: ", error);
-    res
-      .status(error.status || 500)
-      .send({ error: true, body: null, message: error.message || error });
+    console.error("❌ Error al registrar usuario:", error.message || error);
+    res.status(500).send({ error: true, body: null, message: error.message || error });
   }
 };
 
@@ -49,7 +47,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      throw "Debe completar todos los campos.";
+      throw new Error("Debe completar todos los campos.");
     }
 
     // Verificación de existencia del usuario
@@ -59,14 +57,14 @@ export const login = async (req, res) => {
     );
 
     if (!rows.length) {
-      throw "El correo o la contraseña son incorrectos.";
+      throw new Error("El correo o la contraseña son incorrectos.");
     }
 
     // Validación de la contraseña
     const passwordIsValid = bcrypt.compareSync(password, rows[0].password);
 
     if (!passwordIsValid) {
-      throw "El correo o la contraseña son incorrectos.";
+      throw new Error("El correo o la contraseña son incorrectos.");
     }
 
     // Generación del token de autenticación
@@ -78,9 +76,7 @@ export const login = async (req, res) => {
       message: "Inicio de sesión exitoso.",
     });
   } catch (error) {
-    console.error("❌ Error al iniciar sesión: ", error);
-    res
-      .status(error.status || 500)
-      .send({ error: true, body: null, message: error.message || error });
+    console.error("❌ Error al iniciar sesión:", error.message || error);
+    res.status(500).send({ error: true, body: null, message: error.message || error });
   }
 };
