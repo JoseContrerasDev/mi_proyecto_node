@@ -17,6 +17,7 @@ export const register = async (req, res) => {
       "SELECT * FROM usuarios WHERE email = ?",
       [email]
     );
+    
 
     if (rows.length !== 0) {
       throw new Error("El correo electrónico ya se encuentra en uso.");

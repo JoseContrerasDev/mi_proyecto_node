@@ -75,3 +75,12 @@ export const updateEvento = async (req, res) => {
         res.status(500).json({ error: 'Error al actualizar el evento' });
     }
 };
+
+// {
+//     "titulo": "Conferencia de Tecnología",
+//     "descripcion": "Evento sobre las últimas tendencias en tecnología.",
+//     "fecha_evento": "2024-12-10",
+//     "localidad": "Buenos Aires",
+//     "organizador_id": 1,
+//     "organizador_tipo": "company"
+// }

@@ -81,3 +81,11 @@ export const updateMensaje = async (req, res) => {
         res.status(500).json({ error: 'Error al actualizar el mensaje' });
     }
 };
+
+// {
+//     "remitente_id": 1,
+//     "tipo_remitente": "student",
+//     "receptor_id": 2,
+//     "tipo_receptor": "recruiter",
+//     "contenido": "Estoy interesado en la oferta laboral publicada."
+// }

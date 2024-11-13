@@ -72,3 +72,12 @@ export const updateOferta = async (req, res) => {
         res.status(500).json({ error: 'Error al actualizar la oferta' });
     }
 };
+
+
+// {
+//     "titulo": "Desarrollador Backend",
+//     "descripcion": "Responsable de desarrollar la API de la aplicación.",
+//     "modalidad": "full-time",
+//     "requisitos": "Experiencia en Node.js y MySQL.",
+//     "localidad": "Remoto"
+// }

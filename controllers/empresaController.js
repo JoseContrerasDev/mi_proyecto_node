@@ -76,3 +76,16 @@ export const updateEmpresa = async (req, res) => {
         res.status(500).json({ error: 'Error al actualizar la empresa' });
     }
 };
+
+
+// {
+//     "nombre": "Tech Solutions Inc.",
+//     "direccion": "123 Calle Principal, Ciudad",
+//     "telefono": "+54 9 1234 567890",
+//     "contacto_principal": "Carlos Pérez",
+//     "email": "contacto@techsolutions.com",
+//     "password": "segura123",
+//     "descripcion": "Empresa especializada en soluciones de tecnología avanzada",
+//     "industria": "Tecnología",
+//     "webpage": "https://www.techsolutions.com"
+// }
