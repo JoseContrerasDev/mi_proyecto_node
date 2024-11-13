@@ -5,33 +5,35 @@ Registro de Usuario
 
 Endpoint: POST /register
 Descripción: Crea un nuevo usuario con email, password y imagen opcional.
+
 Ejemplo JSON:
-json
-Copiar código
+
 {
   "email": "example@example.com",
   "password": "password123",
   "image": "<archivo_imagen>"
 }
+
 Inicio de Sesión
 
 Endpoint: POST /login
 Descripción: Inicia sesión y obtiene un token de autenticación.
+
 Ejemplo JSON:
-json
-Copiar código
+
 {
   "email": "example@example.com",
   "password": "password123"
 }
-2. Empresas
-Crear Empresa
 
+2. Empresas
+   
+Crear Empresa
 Endpoint: POST /empresas
 Descripción: Agrega una nueva empresa.
+
 Ejemplo JSON:
-json
-Copiar código
+
 {
   "nombre": "Tech Solutions",
   "direccion": "123 Calle Principal, Ciudad",
@@ -43,6 +45,7 @@ Copiar código
   "industria": "Tecnología",
   "webpage": "https://www.techsolutions.com"
 }
+
 Obtener todas las Empresas
 
 Endpoint: GET /empresas
@@ -50,6 +53,7 @@ Descripción: Devuelve un listado de todas las empresas.
 Obtener una Empresa por ID
 
 Endpoint: GET /empresas/:id
+
 Descripción: Devuelve los detalles de una empresa específica.
 Actualizar Empresa
 
@@ -59,19 +63,21 @@ Eliminar Empresa
 
 Endpoint: DELETE /empresas/:id
 Descripción: Elimina una empresa específica.
+
+
 3. Estudiantes
 Crear Estudiante
 
 Endpoint: POST /estudiantes
 Descripción: Registra un nuevo estudiante.
 Ejemplo JSON:
-json
-Copiar código
+
 {
   "nombre": "Juan Pérez",
   "email": "juan.perez@instituto.edu",
   "password": "contrasena123"
 }
+
 Obtener todos los Estudiantes
 
 Endpoint: GET /estudiantes
@@ -88,14 +94,15 @@ Eliminar Estudiante
 
 Endpoint: DELETE /estudiantes/:id
 Descripción: Borra un estudiante del sistema.
+
+
 4. Eventos
 Crear Evento
 
 Endpoint: POST /eventos
 Descripción: Agrega un nuevo evento.
 Ejemplo JSON:
-json
-Copiar código
+
 {
   "titulo": "Conferencia de Tecnología",
   "descripcion": "Evento sobre las últimas tendencias en tecnología",
@@ -125,9 +132,9 @@ Crear Mensaje
 
 Endpoint: POST /mensajes
 Descripción: Envía un nuevo mensaje entre usuarios.
+
 Ejemplo JSON:
-json
-Copiar código
+
 {
   "remitente_id": 1,
   "tipo_remitente": "student",
@@ -151,14 +158,15 @@ Eliminar Mensaje
 
 Endpoint: DELETE /mensajes/:id
 Descripción: Borra un mensaje específico.
+
 6. Ofertas
 Crear Oferta
 
 Endpoint: POST /ofertas
 Descripción: Crea una nueva oferta de trabajo.
+
 Ejemplo JSON:
-json
-Copiar código
+
 {
   "titulo": "Desarrollador Backend",
   "descripcion": "Responsable de desarrollar la API",
